@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.itsc.project.vocabulary.training.backend.dao.FeedbackDao">
+  <resultMap id="BaseResultMap" type="cc.itsc.project.vocabulary.training.backend.pojo.po.FeedbackPO">
+    <!--@Table feedback-->
+    <id column="fid" jdbcType="BIGINT" property="fid" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    fid, `uid`, content, create_time, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from feedback
+    where fid = #{fid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from feedback
+    where fid = #{fid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="fid" keyProperty="fid" parameterType="cc.itsc.project.vocabulary.training.backend.pojo.po.FeedbackPO" useGeneratedKeys="true">
+    insert into feedback (`uid`, content, create_time,
+      `status`)
+    values (#{uid,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="fid" keyProperty="fid" parameterType="cc.itsc.project.vocabulary.training.backend.pojo.po.FeedbackPO" useGeneratedKeys="true">
+    insert into feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.itsc.project.vocabulary.training.backend.pojo.po.FeedbackPO">
+    update feedback
+    <set>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cc.itsc.project.vocabulary.training.backend.pojo.po.FeedbackPO">
+    update feedback
+    set `uid` = #{uid,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=INTEGER}
+    where fid = #{fid,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAllFeedback" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from feedback
+  </select>
+</mapper>

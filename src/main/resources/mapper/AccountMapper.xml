@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cc.itsc.project.vocabulary.training.backend.dao.AccountDao">
+
+
+<select id="selectAccountInfoByAccount" resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.AccountPO">
+    select uid, role, account, secret_key, password, birthday, nike_name, gender, signature, avatar, background, status, create_time, update_time
+     from account where account = #{account}
+     limit 1
+</select>
+
+<insert id="insertAccountDetail">
+    insert into account(role,account,secret_key,password,nike_name,gender,avatar,create_time,update_time,last_login_time)
+      values (#{accountInfo.role},#{accountInfo.account},#{accountInfo.secretKey},#{accountInfo.password},
+      #{accountInfo.nikeName},#{accountInfo.gender},#{accountInfo.avatar},#{accountInfo.createTime},#{accountInfo.createTime},UNIX_TIMESTAMP(now()) * 1000)
+</insert>
+
+<select id="selectAccountInfoByUid" resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.AccountPO">
+    select uid, role, account, secret_key, password, birthday, nike_name, gender, signature, avatar, background, status, create_time, update_time,last_login_time
+    from account where uid = #{uid}
+    limit 1
+</select>
+
+<update id="updateProfileAccountByUid">
+    update account
+    <set>
+        <if test="accountInfo.avatar != null and accountInfo.avatar != ''">
+            avatar = #{accountInfo.avatar},
+        </if>
+        <if test="accountInfo.background != null and accountInfo.background != ''">
+            background = #{accountInfo.background},
+        </if>
+        <if test="accountInfo.birthday != null and accountInfo.birthday != 0">
+            birthday = #{accountInfo.birthday},
+        </if>
+        <if test="accountInfo.gender != null and accountInfo.gender != ''">
+            gender = #{accountInfo.gender},
+        </if>
+        <if test="accountInfo.nikeName != null and accountInfo.nikeName != ''">
+            nike_name = #{accountInfo.nikeName},
+        </if>
+        <if test="accountInfo.signature != null and accountInfo.signature != ''">
+            signature = #{accountInfo.signature},
+        </if>
+        update_time = #{accountInfo.updateTime}
+    </set>
+    where uid = #{accountInfo.uid} limit 1
+</update>
+
+<update id="updateAccountPasswordByUid">
+    update account set password = #{password} where uid = #{uid} limit 1
+</update>
+
+<delete id="deleteAccountProfileByUid">
+    delete from account where uid = #{uid} limit 1
+</delete>
+
+<select id="selectAllAccountInfo" resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.AccountPO">
+    select uid, role, account, secret_key, password, birthday, nike_name, gender, signature, avatar, background, status, create_time, update_time,last_login_time
+     from account
+</select>
+
+<update id="refreshAccountLastLoginTime">
+    update account set last_login_time = UNIX_TIMESTAMP(now()) * 1000 where uid = #{uid}
+</update>
+
+
+</mapper>
