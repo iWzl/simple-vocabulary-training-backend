@@ -66,7 +66,7 @@ public class Swagger2Config {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("词汇训练API")
+                .title("词汇训练API文档")
                 .description("词汇训练的REST风格的后端实现")
                 .contact(new Contact("Leonardo iWzl", "https://www.upuphub.com", ""))
                 .version("v1.0.0")
