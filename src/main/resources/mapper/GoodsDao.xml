@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.itsc.project.vocabulary.training.backend.dao.GoodsDao">
+  <resultMap id="BaseResultMap" type="cc.itsc.project.vocabulary.training.backend.pojo.po.GoodsPO">
+    <!--@mbg.generated-->
+    <id column="gid" jdbcType="INTEGER" property="gid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="release_time" jdbcType="BIGINT" property="releaseTime" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="poster" jdbcType="VARCHAR" property="poster" />
+    <result column="price" jdbcType="FLOAT" property="price" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    gid, `name`, image, release_time, introduction, poster, price, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="gid" keyProperty="gid" parameterType="cc.itsc.project.vocabulary.training.backend.pojo.po.GoodsPO" useGeneratedKeys="true">
+    insert into goods (`name`, image, release_time,
+      introduction, poster, price, 
+      `status`)
+    values (#{name,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{releaseTime,jdbcType=BIGINT},
+      #{introduction,jdbcType=VARCHAR}, #{poster,jdbcType=VARCHAR}, #{price,jdbcType=FLOAT}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="gid" keyProperty="gid" parameterType="cc.itsc.project.vocabulary.training.backend.pojo.po.GoodsPO" useGeneratedKeys="true">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="releaseTime != null">
+        release_time,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="poster != null">
+        poster,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        #{releaseTime,jdbcType=BIGINT},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="poster != null">
+        #{poster,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=FLOAT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cc.itsc.project.vocabulary.training.backend.pojo.po.GoodsPO">
+    update goods
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        release_time = #{releaseTime,jdbcType=BIGINT},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="poster != null">
+        poster = #{poster,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=FLOAT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="cc.itsc.project.vocabulary.training.backend.pojo.po.GoodsPO">
+    update goods
+    set `name` = #{name,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+    release_time = #{releaseTime,jdbcType=BIGINT},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      poster = #{poster,jdbcType=VARCHAR},
+      price = #{price,jdbcType=FLOAT},
+      `status` = #{status,jdbcType=INTEGER}
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllGoodsClassify" resultType="java.lang.String">
+    select classify from  goods_classify group by classify
+  </select>
+</mapper>

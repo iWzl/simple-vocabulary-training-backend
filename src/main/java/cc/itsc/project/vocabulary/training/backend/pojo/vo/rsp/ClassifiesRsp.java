@@ -9,7 +9,7 @@ import java.util.List;
 
 @ApiModel(description = "所有的classify信息")
 public class ClassifiesRsp implements HttpResponse {
-    @ApiModelProperty("所有的电影信息分类")
+    @ApiModelProperty("所有的周边商品分类")
     private List<String> classifyList;
 
     public List<String> getClassifyList() {

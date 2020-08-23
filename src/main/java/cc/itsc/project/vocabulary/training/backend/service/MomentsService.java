@@ -2,7 +2,7 @@ package cc.itsc.project.vocabulary.training.backend.service;
 
 
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.req.MomentsReq;
-import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.MomentsRsp;
+import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.GoodsRsp;
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.PageOfInfoListRsp;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,7 +25,7 @@ public interface MomentsService {
      * @param pageSize 每页的数量
      * @return 查询后的每页的影评信息, 带分页信息
      */
-    PageOfInfoListRsp<MomentsRsp> fetchPageOfMomentsByPageInfo(Integer pageNo, Integer pageSize);
+    PageOfInfoListRsp<GoodsRsp> fetchPageOfMomentsByPageInfo(Integer pageNo, Integer pageSize);
 
     /**
      * 分页待审核的Moments信息
@@ -34,7 +34,7 @@ public interface MomentsService {
      * @param pageSize 每页的数量
      * @return 查询后的每页的影评信息, 带分页信息
      */
-    PageOfInfoListRsp<MomentsRsp> fetchReviewPageOfMoments(Integer pageNo, Integer pageSize);
+    PageOfInfoListRsp<GoodsRsp> fetchReviewPageOfMoments(Integer pageNo, Integer pageSize);
 
 
     /**
@@ -49,7 +49,7 @@ public interface MomentsService {
      * @param pageSize 每页的数量
      * @return 查询后的每页的影评信息, 带分页信息
      */
-    PageOfInfoListRsp<MomentsRsp> fetchPageOfMomentsByMe(Integer pageNo, Integer pageSize);
+    PageOfInfoListRsp<GoodsRsp> fetchPageOfMomentsByMe(Integer pageNo, Integer pageSize);
 
     void reviewPassPageOfMomentsByMid(Long mid);
 }

@@ -3,7 +3,7 @@ package cc.itsc.project.vocabulary.training.backend.service.impl;
 import cc.itsc.project.vocabulary.training.backend.dao.MomentsDao;
 import cc.itsc.project.vocabulary.training.backend.pojo.po.MomentsPO;
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.req.MomentsReq;
-import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.MomentsRsp;
+import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.GoodsRsp;
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.PageOfInfoListRsp;
 import cc.itsc.project.vocabulary.training.backend.service.MomentsService;
 import cc.itsc.project.vocabulary.training.backend.utils.HttpUtil;
@@ -33,21 +33,21 @@ public class MomentsServiceImpl implements MomentsService {
     }
 
     @Override
-    public PageOfInfoListRsp<MomentsRsp> fetchPageOfMomentsByPageInfo(Integer pageNo, Integer pageSize) {
+    public PageOfInfoListRsp<GoodsRsp> fetchPageOfMomentsByPageInfo(Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo,pageSize);
         PageInfo<MomentsPO> pageOfMoments = new PageInfo<>(momentsDao.selectAllEnableMomentsByUin(HttpUtil.getUserUid()));
         return coverToPageOfMomentRsp(pageOfMoments);
     }
 
     @Override
-    public PageOfInfoListRsp<MomentsRsp> fetchReviewPageOfMoments(Integer pageNo, Integer pageSize) {
+    public PageOfInfoListRsp<GoodsRsp> fetchReviewPageOfMoments(Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo,pageSize);
         PageInfo<MomentsPO> pageOfMoments = new PageInfo<>(momentsDao.selectReviewMoments());
         return coverToPageOfMomentRsp(pageOfMoments);
     }
 
     @Override
-    public PageOfInfoListRsp<MomentsRsp> fetchPageOfMomentsByMe(Integer pageNo, Integer pageSize) {
+    public PageOfInfoListRsp<GoodsRsp> fetchPageOfMomentsByMe(Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo,pageSize);
         PageInfo<MomentsPO> pageOfMoments = new PageInfo<>(momentsDao.selectByUid(HttpUtil.getUserUid()));
         return coverToPageOfMomentRsp(pageOfMoments);
@@ -63,12 +63,12 @@ public class MomentsServiceImpl implements MomentsService {
         momentsDao.deleteByPrimaryKey(mid);
     }
 
-    private PageOfInfoListRsp<MomentsRsp> coverToPageOfMomentRsp(PageInfo<MomentsPO> momentsPageInfo){
-        PageOfInfoListRsp<MomentsRsp> pageOfMomentsRsp = new PageOfInfoListRsp<>();
+    private PageOfInfoListRsp<GoodsRsp> coverToPageOfMomentRsp(PageInfo<MomentsPO> momentsPageInfo){
+        PageOfInfoListRsp<GoodsRsp> pageOfMomentsRsp = new PageOfInfoListRsp<>();
         pageOfMomentsRsp.setDataList(momentsPageInfo.getList().stream().map((moments->{
-            MomentsRsp momentsRsp = new MomentsRsp();
-            BeanUtils.copyProperties(moments, momentsRsp);
-            return momentsRsp;
+            GoodsRsp goodsRsp = new GoodsRsp();
+            BeanUtils.copyProperties(moments, goodsRsp);
+            return goodsRsp;
         })).collect(Collectors.toList()));
         BeanUtils.copyProperties(momentsPageInfo, pageOfMomentsRsp);
         return pageOfMomentsRsp;

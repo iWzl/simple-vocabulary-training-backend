@@ -6,7 +6,7 @@ import cc.itsc.project.vocabulary.training.backend.pojo.vo.common.ServiceRespons
 import cc.itsc.project.vocabulary.training.backend.service.MomentsService;
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.req.MomentsReq;
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.DefaultHttpRsp;
-import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.MomentsRsp;
+import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.GoodsRsp;
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.PageOfInfoListRsp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -49,9 +49,9 @@ public class MomentController {
             @ApiImplicitParam(name = "pageSize",value = "页码大小",example = "20")
     })
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage<PageOfInfoListRsp<MomentsRsp>> fetchPageOfMoments(@Min(value = 1,message = "页码数最少为1")@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
-                                                                                    @Min (value = 1,message = "每页数量最小为1")@RequestParam(value = "pageSize",defaultValue = "20") Integer pageSize) {
-        PageOfInfoListRsp<MomentsRsp> pageOfMomentsRep = momentsService.fetchPageOfMomentsByPageInfo(pageNo,pageSize);
+    public ServiceResponseMessage<PageOfInfoListRsp<GoodsRsp>> fetchPageOfMoments(@Min(value = 1,message = "页码数最少为1")@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
+                                                                                  @Min (value = 1,message = "每页数量最小为1")@RequestParam(value = "pageSize",defaultValue = "20") Integer pageSize) {
+        PageOfInfoListRsp<GoodsRsp> pageOfMomentsRep = momentsService.fetchPageOfMomentsByPageInfo(pageNo,pageSize);
         return ServiceResponseMessage.createBySuccessCodeMessage(pageOfMomentsRep);
     }
 
@@ -63,9 +63,9 @@ public class MomentController {
             @ApiImplicitParam(name = "pageSize",value = "页码大小",example = "20")
     })
     @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage<PageOfInfoListRsp<MomentsRsp>> fetchPageOfMomentsByMe(@Min(value = 1,message = "页码数最少为1")@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
-                                                                                          @Min (value = 1,message = "每页数量最小为1")@RequestParam(value = "pageSize",defaultValue = "20") Integer pageSize) {
-        PageOfInfoListRsp<MomentsRsp> pageOfMomentsRep = momentsService.fetchPageOfMomentsByMe(pageNo,pageSize);
+    public ServiceResponseMessage<PageOfInfoListRsp<GoodsRsp>> fetchPageOfMomentsByMe(@Min(value = 1,message = "页码数最少为1")@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
+                                                                                      @Min (value = 1,message = "每页数量最小为1")@RequestParam(value = "pageSize",defaultValue = "20") Integer pageSize) {
+        PageOfInfoListRsp<GoodsRsp> pageOfMomentsRep = momentsService.fetchPageOfMomentsByMe(pageNo,pageSize);
         return ServiceResponseMessage.createBySuccessCodeMessage(pageOfMomentsRep);
     }
 
@@ -77,9 +77,9 @@ public class MomentController {
             @ApiImplicitParam(name = "pageSize",value = "页码大小",example = "20")
     })
     @GetMapping(value = "/review", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage<PageOfInfoListRsp<MomentsRsp>> fetchReviewPageOfMoments(@Min(value = 1,message = "页码数最少为1")@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
-                                                                                    @Min (value = 1,message = "每页数量最小为1")@RequestParam(value = "pageSize",defaultValue = "20") Integer pageSize) {
-        PageOfInfoListRsp<MomentsRsp> pageOfMomentsRep = momentsService.fetchReviewPageOfMoments(pageNo,pageSize);
+    public ServiceResponseMessage<PageOfInfoListRsp<GoodsRsp>> fetchReviewPageOfMoments(@Min(value = 1,message = "页码数最少为1")@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
+                                                                                        @Min (value = 1,message = "每页数量最小为1")@RequestParam(value = "pageSize",defaultValue = "20") Integer pageSize) {
+        PageOfInfoListRsp<GoodsRsp> pageOfMomentsRep = momentsService.fetchReviewPageOfMoments(pageNo,pageSize);
         return ServiceResponseMessage.createBySuccessCodeMessage(pageOfMomentsRep);
     }
 
