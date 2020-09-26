@@ -4,9 +4,8 @@ public class GoodsPO {
     private Integer gid;
     private String name;
     private String image;
-    private Long releaseTime;
+    private String classify;
     private String introduction;
-    private String poster;
     private Double price;
     private Integer status;
 
@@ -34,13 +33,12 @@ public class GoodsPO {
         this.image = image;
     }
 
-
-    public Long getReleaseTime() {
-        return releaseTime;
+    public String getClassify() {
+        return classify;
     }
 
-    public void setReleaseTime(Long releaseTime) {
-        this.releaseTime = releaseTime;
+    public void setClassify(String classify) {
+        this.classify = classify;
     }
 
     public String getIntroduction() {
@@ -49,14 +47,6 @@ public class GoodsPO {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
-    }
-
-    public String getPoster() {
-        return poster;
-    }
-
-    public void setPoster(String poster) {
-        this.poster = poster;
     }
 
     public Double getPrice() {

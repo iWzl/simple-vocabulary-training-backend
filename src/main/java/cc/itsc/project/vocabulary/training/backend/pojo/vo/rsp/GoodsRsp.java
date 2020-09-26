@@ -9,9 +9,7 @@ public class GoodsRsp implements HttpResponse {
     private Integer gid;
     private String name;
     private String image;
-    private Long releaseTime;
     private String introduction;
-    private String poster;
     private Double price;
     private Integer status;
 
@@ -40,28 +38,12 @@ public class GoodsRsp implements HttpResponse {
     }
 
 
-    public Long getReleaseTime() {
-        return releaseTime;
-    }
-
-    public void setReleaseTime(Long releaseTime) {
-        this.releaseTime = releaseTime;
-    }
-
     public String getIntroduction() {
         return introduction;
     }
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
-    }
-
-    public String getPoster() {
-        return poster;
-    }
-
-    public void setPoster(String poster) {
-        this.poster = poster;
     }
 
     public Double getPrice() {

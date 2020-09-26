@@ -54,21 +54,4 @@ public interface AccountService {
      * @return 密码修改的处理结果
      */
     boolean modifyAccountPassword(ModifyAccountPasswordReq modifyAccountPasswordReq);
-
-    /**
-     * 删除账号
-     *
-     * @param uid 用户uid
-     * @return 返回用户账号删除的处理状态
-     */
-    boolean deleteAccountProfileByUid(Integer uid);
-
-    /**
-     *  分页获取所有的用户信息
-     *
-     * @param pageSize 分页大小
-     * @param pageNo 页码数字
-     * @return 查询到的分页数据结果
-     */
-    PageOfInfoListRsp<UserProfileRsp> fetchPageOfUsersProfile(Integer pageSize, Integer pageNo);
 }

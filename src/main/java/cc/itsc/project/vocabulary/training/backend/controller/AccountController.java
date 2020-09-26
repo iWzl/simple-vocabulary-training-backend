@@ -120,29 +120,4 @@ public class AccountController {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR, BackendProfileConfig.ERROR_WORDING_SIGN_VERIFICATION_FAILED);
         }
     }
-
-    @ApiOperation("# 删除用户")
-    @Security(roles = RoleEnum.ADMIN)
-    @DeleteMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage<DefaultHttpRsp> deleteAccountProfile(@RequestParam(value = "uid") Integer uid) {
-        boolean isDeleteSuccess = accountService.deleteAccountProfileByUid(uid);
-        if (isDeleteSuccess) {
-            return ServiceResponseMessage.createBySuccessCodeMessage(BackendProfileConfig.SUCCESS_WORDING_MODIFY_SUCCESS);
-        } else {
-            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.BAD_REQUEST, BackendProfileConfig.ERROR_WORDING_MODIFY_FAILED);
-        }
-    }
-
-    @Security(roles = RoleEnum.ADMIN)
-    @ApiOperation("# 分页拉取用户Profile信息")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "pageNo",value = "页码数",example = "1"),
-            @ApiImplicitParam(name = "pageSize",value = "页码大小",example = "20")
-    })
-    @GetMapping(value = "/profile/batch", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage<PageOfInfoListRsp<UserProfileRsp>> fetchPageOfUsersProfile(@Min(value = 1,message = "页码数最少为1")@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
-                                                                                             @Min (value = 1,message = "每页数量最小为1")@RequestParam(value = "pageSize",defaultValue = "20") Integer pageSize) {
-        PageOfInfoListRsp<UserProfileRsp> pageOfUserProfileRsp = accountService.fetchPageOfUsersProfile(pageSize,pageNo);
-        return ServiceResponseMessage.createBySuccessCodeMessage(pageOfUserProfileRsp);
-    }
 }

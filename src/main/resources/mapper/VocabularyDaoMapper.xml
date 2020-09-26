@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.itsc.project.vocabulary.training.backend.dao.VocabularyDao">
+
+    <select id="selectUnReadVocabularySentenceListByUid"
+            resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.SentencePO">
+        SELECT word as english,paraphrase as chinese FROM dictionary where word not in (select word from vocabulary where uid = #{userUid})
+    </select>
+
+    <select id="selectReadVocabularySentenceListByUid"
+            resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.SentencePO">
+        SELECT word as english,paraphrase as chinese FROM dictionary where word in (select word from vocabulary where uid = #{userUid})
+    </select>
+
+    <select id="selectSentenceListByUidAndClassify"
+            resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.SentencePO">
+        SELECT english,chinese FROM sentence where classify = #{classify}
+    </select>
+
+
+</mapper>

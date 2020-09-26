@@ -142,24 +142,4 @@ public class AccountServiceImpl implements AccountService {
         }
         return false;
     }
-
-    @Override
-    public boolean deleteAccountProfileByUid(Integer uid) {
-        int row = accountDao.deleteAccountProfileByUid(uid);
-        return row == BackendProfileConfig.ROW_NUMBER_1;
-    }
-
-    @Override
-    public PageOfInfoListRsp<UserProfileRsp> fetchPageOfUsersProfile(Integer pageSize, Integer pageNo) {
-        PageHelper.startPage(pageNo,pageSize);
-        PageInfo<AccountPO> pageOfAccount = new PageInfo<>(accountDao.selectAllAccountInfo());
-        PageOfInfoListRsp<UserProfileRsp> pageOfUserProfileRsp = new PageOfInfoListRsp<>();
-        pageOfUserProfileRsp.setDataList(pageOfAccount.getList().stream().map((accountInfo->{
-            UserProfileRsp userProfileRsp = new UserProfileRsp();
-            BeanUtils.copyProperties(accountInfo, userProfileRsp);
-            return userProfileRsp;
-        })).collect(Collectors.toList()));
-        BeanUtils.copyProperties(pageOfAccount, pageOfUserProfileRsp);
-        return pageOfUserProfileRsp;
-    }
 }
