@@ -9,7 +9,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 26/09/2020 22:50:19
+ Date: 27/09/2020 21:12:54
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,29 @@ CREATE TABLE `account` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `account` VALUES (100036, 'User', 'Leonardo', '2f986a35-f184-4f2a-bbdc-c4a65fb48c69', 'Jo9QAYE8KaOAhZa8kUo0Ug==', 1577808000000, 'Leonardo DiCaprio', 'M', NULL, 'https://w.wallhaven.cc/full/39/wallhaven-39pw6v.jpg', NULL, 0, 1597593479103, 1597593479103, 1597593479000);
-INSERT INTO `account` VALUES (100037, 'User', '123456', '829c2455-e204-4777-9b78-129ceb55e607', 'q5sKYQLa3f3DWuMr8P2C2Q==', 1602172800000, '学习机', 'M', '好好学习，天天向上', 'https://w.wallhaven.cc/full/39/wallhaven-39pw6v.jpg', 'http://api-a.upuphub.com/image/8fe963b3-cd53-452a-9d6c-833d69134aa1.png', 0, 1597734648071, 1601129140573, 1601129065000);
+INSERT INTO `account` VALUES (100037, 'User', '123456', '829c2455-e204-4777-9b78-129ceb55e607', 'q5sKYQLa3f3DWuMr8P2C2Q==', 1602172800000, '学习机', 'M', '好好学习，天天向上', 'https://w.wallhaven.cc/full/39/wallhaven-39pw6v.jpg', 'http://api-a.upuphub.com/image/8fe963b3-cd53-452a-9d6c-833d69134aa1.png', 0, 1597734648071, 1601129140573, 1601208660000);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for collect
+-- ----------------------------
+DROP TABLE IF EXISTS `collect`;
+CREATE TABLE `collect` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `uid` int NOT NULL,
+  `classify` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `english` varchar(2048) COLLATE utf8mb4_bin NOT NULL,
+  `chinese` varchar(2048) COLLATE utf8mb4_bin NOT NULL,
+  `create_time` bigint NOT NULL,
+  `status` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `classify` (`classify`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Records of collect
+-- ----------------------------
+BEGIN;
 COMMIT;
 
 -- ----------------------------
@@ -62,6 +84,25 @@ CREATE TABLE `dictionary` (
 
 -- ----------------------------
 -- Records of dictionary
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for discover
+-- ----------------------------
+DROP TABLE IF EXISTS `discover`;
+CREATE TABLE `discover` (
+  `id` int NOT NULL,
+  `title` varchar(2048) COLLATE utf8mb4_bin NOT NULL,
+  `classify` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `content` varchar(2048) COLLATE utf8mb4_bin NOT NULL,
+  `status` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Records of discover
 -- ----------------------------
 BEGIN;
 COMMIT;
@@ -136,7 +177,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `vocabulary`;
 CREATE TABLE `vocabulary` (
-  `id` bigint NOT NULL COMMENT 'ID',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `uid` int NOT NULL COMMENT '用户ID',
   `word` varchar(1024) COLLATE utf8mb4_bin NOT NULL COMMENT '单词',
   `status` int DEFAULT NULL COMMENT '状态',

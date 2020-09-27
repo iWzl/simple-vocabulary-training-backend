@@ -2,11 +2,13 @@ package cc.itsc.project.vocabulary.training.backend.service.impl;
 
 
 import cc.itsc.project.vocabulary.training.backend.dao.VocabularyDao;
-import cc.itsc.project.vocabulary.training.backend.pojo.po.DictionaryPO;
+import cc.itsc.project.vocabulary.training.backend.pojo.po.GrammarPO;
 import cc.itsc.project.vocabulary.training.backend.pojo.po.SentencePO;
-import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.GoodsRsp;
+import cc.itsc.project.vocabulary.training.backend.pojo.po.VocabularyPO;
+import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.GrammarRsp;
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.PageOfInfoListRsp;
 import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.SentenceRsp;
+import cc.itsc.project.vocabulary.training.backend.pojo.vo.rsp.VocabularyRsp;
 import cc.itsc.project.vocabulary.training.backend.service.VocabularyService;
 
 import cc.itsc.project.vocabulary.training.backend.utils.HttpUtil;
@@ -26,7 +28,10 @@ public class VocabularyServiceImpl implements VocabularyService {
     private static final String LISTEN_CLASSIFY_SENTENCE = "句子";
     private static final String LISTEN_CLASSIFY_MOVIE = "影视片段";
 
-    private VocabularyDao vocabularyDao;
+    private static final String WORD_CLASSIFY_WORD_UNDO = "未学";
+    private static final String WORD_CLASSIFY_WORD_DO = "已学";
+
+    private final VocabularyDao vocabularyDao;
 
     public VocabularyServiceImpl(VocabularyDao vocabularyDao) {
         this.vocabularyDao = vocabularyDao;
@@ -52,6 +57,7 @@ public class VocabularyServiceImpl implements VocabularyService {
             case LISTEN_CLASSIFY_MOVIE:
                 PageHelper.startPage(pageNo,pageSize);
                 sentenceList = vocabularyDao.selectSentenceListByUidAndClassify(HttpUtil.getUserUid(),classify);
+                break;
             default:
                 break;
         }
@@ -63,5 +69,54 @@ public class VocabularyServiceImpl implements VocabularyService {
         })).collect(Collectors.toList()));
         BeanUtils.copyProperties(pageOfSentenceList, sentenceRspPageOfInfoListRsp);
         return sentenceRspPageOfInfoListRsp;
+    }
+
+    @Override
+    public PageOfInfoListRsp<VocabularyRsp> fetchPageOfVocabularyByClassify(String classify, Integer pageNo, Integer pageSize) {
+        PageOfInfoListRsp<VocabularyRsp> vocabularyPageOfInfoListRsp = new PageOfInfoListRsp<>();
+        if(null == classify){
+            return vocabularyPageOfInfoListRsp;
+        }
+        List<VocabularyPO> vocabularyList = new ArrayList<>();
+        switch (classify){
+            case WORD_CLASSIFY_WORD_UNDO:
+                PageHelper.startPage(pageNo,pageSize);
+                vocabularyList = vocabularyDao.selectUnReadVocabularyListByUid(HttpUtil.getUserUid());
+                break;
+            case WORD_CLASSIFY_WORD_DO:
+                PageHelper.startPage(pageNo,pageSize);
+                vocabularyList = vocabularyDao.selectReadVocabularyListByUid(HttpUtil.getUserUid());
+                break;
+            default:
+                break;
+        }
+        PageInfo<VocabularyPO>  pageOfVocabularyList = new PageInfo<>(vocabularyList);
+        vocabularyPageOfInfoListRsp.setDataList(pageOfVocabularyList.getList().stream().map((vocabulary->{
+            VocabularyRsp vocabularyRsp= new VocabularyRsp();
+            BeanUtils.copyProperties(vocabulary, vocabularyRsp);
+            return vocabularyRsp;
+        })).collect(Collectors.toList()));
+        BeanUtils.copyProperties(pageOfVocabularyList, vocabularyPageOfInfoListRsp);
+        return vocabularyPageOfInfoListRsp;
+    }
+
+    @Override
+    public void syncUnReadVocabularyWithWordDetail(String word) {
+        vocabularyDao.insertVocabularyReadInfo(HttpUtil.getUserUid(),word);
+    }
+
+    @Override
+    public PageOfInfoListRsp<GrammarRsp> fetchPageOfGrammarWithClassify(String classify, Integer pageNo, Integer pageSize) {
+        PageOfInfoListRsp<GrammarRsp> grammarRspPageOfInfoListRsp = new PageOfInfoListRsp<>();
+        PageHelper.startPage(pageNo,pageSize);
+        List<GrammarPO> grammarList = vocabularyDao.selectGrammarWithClassify(classify);
+        PageInfo<GrammarPO> grammarPageInfo = new PageInfo<>(grammarList);
+        grammarRspPageOfInfoListRsp.setDataList(grammarPageInfo.getList().stream().map((grammar->{
+            GrammarRsp grammarRsp= new GrammarRsp();
+            BeanUtils.copyProperties(grammar, grammarRsp);
+            return grammarRsp;
+        })).collect(Collectors.toList()));
+        BeanUtils.copyProperties(grammarPageInfo, grammarRspPageOfInfoListRsp);
+        return grammarRspPageOfInfoListRsp;
     }
 }

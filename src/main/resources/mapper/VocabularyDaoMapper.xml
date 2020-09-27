@@ -17,5 +17,21 @@
         SELECT english,chinese FROM sentence where classify = #{classify}
     </select>
 
+    <select id="selectUnReadVocabularyListByUid"
+            resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.VocabularyPO">
+        select word as english, symbol , paraphrase as chinese, part_of_speech as type from dictionary where word not in (select word from vocabulary where uid = #{userUid})
+    </select>
+    <select
+    id="selectReadVocabularyListByUid"
+            resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.VocabularyPO">
+        select word as english, symbol , paraphrase as chinese, part_of_speech as type from dictionary where word in (select word from vocabulary where uid = #{userUid})
+    </select>
 
+    <insert id="insertVocabularyReadInfo">
+        insert into vocabulary(uid, word) values (#{userUid},#{word})
+    </insert>
+
+    <select id="selectGrammarWithClassify" resultType="cc.itsc.project.vocabulary.training.backend.pojo.po.GrammarPO">
+        select title,content from discover where classify = #{classify}
+    </select>
 </mapper>
